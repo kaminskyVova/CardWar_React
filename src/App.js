@@ -1,38 +1,69 @@
-import React from "react";
+import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import Home from "./components/Home";
+import Field from "./components/Field";
+import Result from "./components/Result";
 
-function App() {
-  return (
-    <div className="App">
+class App extends Component {
+  constructor(props) {
+    super(props)
 
-      <div className="home">
+    this.state ={
+      computer: 'Computer',
+      userName: '',
+      compCard: Math.floor(Math.random() * 14),
+      userCard: Math.floor(Math.random() * 14),
+      countComp: 0,
+      countUser: 0
+    }
+  }
+
+  addUserName = (name) => {
+    this.setState({
+      userName: name
+    })
+  }
+
+update = () => {
+  this.setState({
+    compCard: Math.floor(Math.random() * 14),
+    userCard: Math.floor(Math.random() * 14)
+  })
+}
+
+count = () => {
+  if (this.state.compCard > this.state.userCard) {
+    console.log('222');
+    this.setState({
+      countComp: this.state.countComp + 1
+    })
+  } 
+  else if (this.state.userCard > this.state.compCard) {
+    console.log('111');
+    this.setState({
+      countUser: this.state.countUser + 1
+    })
+    
+  }
+}
+
+
+  render() {
+
+    
+    return (
+      <div className="App">
         <h1>Ready for WAR</h1>
-        <input type="text" placeholder="enter your name"></input>
-        <button>Start</button>
+        <Home addUserName={this.addUserName}/>
+        <hr />
+        <Field userName={this.state.userName} compCard={this.state.compCard} userCard={this.state.userCard} update={this.update}/>
+        <hr />
+        <Result countComp={this.state.countComp} countUser={this.state.countUser} />
+        <hr />
       </div>
-      <hr />
-
-      <div className="field">
-        <p>Computer</p>
-        <div>4</div>
-        <div>4</div>
-        <p>you</p>
-        <button>next</button>
-      </div>
-      <hr />
-
-      <div className="result">
-        <span>LOSE\WIN</span>
-        <div>
-          <span>1</span>--<span>0</span>
-        </div>
-        <button>Again?</button>
-      </div>
-      <hr />
-
-    </div>
-  );
+    );
+  }
 }
 
 export default App;
